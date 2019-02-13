@@ -5,18 +5,46 @@ help(jags)
 #######################
 #this is the data
 #######################
-mydata = list(ns=3,SMD=cbind(c(2,3,4),c(4,5,6)),n=cbind(c(12,13,14),c(14,15,16)))
+mydata = list(ns=3,m=cbind(c(187.5,193.4,161.3),c(165.6,171.9,180.5)),sd=cbind(c(12.3, 8.5,6.9),c(11.9, 10.8, 11.1)),n=cbind(c(12,13,14),c(14,15,16)))
+mydata
+MD=c()
+#Ypologismos tou SMD
+Swithinar=c()
+Swithinpar= c()
+Swithin=c()
+SMD=c()
+Var=c()
+for (i in 1:ns) {
+  #MD=M2-M1
+  MD[i]=mydata$m[i,2]-mydata$m[i,1]
+  #Arithmitis tou Swithin
+  Swithinar[i]=(mydata$n[i,1]-1)*((mydata$sd[i,1])^2)+(mydata$n[i,2]-1)*((mydata$sd[i,2])^2)
+  #paranomastis tou Swithin
+  Swithinpar[i]=(mydata$n[i,1])+(mydata$n[i,2])-2
+  #Swithin
+  Swithin[i]=sqrt( Swithinar[i]/Swithinpar[i])
+  #SMD
+  SMD[i]=MD[i]/Swithin[i]
+  Var[i]=[(mydata$n[i,1]+mydata$n[i,2])/(mydata$n[i,1]*mydata$n[i,2])]+(SMD[i]^2)/[2*(mydata$n[i,1]+mydata$n[i,2])]
+
+}
+MD
+Swithinar
+Swithinpar
+Swithin
+SMD
+Var
 
 #######################
 #then make the model
 #######################
-PMAbinary=function() {
+PMAcontinuous=function() {
   
   for(i in 1:ns) { 
     
     #likelihood
-    r[i,1] ~ dbin(p[i,1],n[i,1])#likelihood in one arm
-    r[i,2] ~ dbin(p[i,2],n[i,2])#likelihood in the other arm
+    SMD[i]~ dnorm(theta[i],prec[i])
+    theta[i]~dnorm(mean,prec.tau)
     
     #parametrisation          
     logit(p[i,1])<- u[i]
