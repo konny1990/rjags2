@@ -1,3 +1,4 @@
+install.packages("R2jags")
 library(R2jags)
 help(jags)
 
@@ -8,13 +9,14 @@ help(jags)
 mydata = list(ns=3,m=cbind(c(187.5,193.4,161.3),c(165.6,171.9,180.5)),sd=cbind(c(12.3, 8.5,6.9),c(11.9, 10.8, 11.1)),n=cbind(c(12,13,14),c(14,15,16)))
 mydata
 MD=c()
+mydata$ns
 #Ypologismos tou SMD
 Swithinar=c()
 Swithinpar= c()
 Swithin=c()
 SMD=c()
 Var=c()
-for (i in 1:ns) {
+for (i in 1:mydata$ns) {
   #MD=M2-M1
   MD[i]=mydata$m[i,2]-mydata$m[i,1]
   #Arithmitis tou Swithin
@@ -25,7 +27,8 @@ for (i in 1:ns) {
   Swithin[i]=sqrt( Swithinar[i]/Swithinpar[i])
   #SMD
   SMD[i]=MD[i]/Swithin[i]
-  Var[i]=[(mydata$n[i,1]+mydata$n[i,2])/(mydata$n[i,1]*mydata$n[i,2])]+(SMD[i]^2)/[2*(mydata$n[i,1]+mydata$n[i,2])]
+  #Var tou Smd
+  Var[i]=((mydata$n[i,1]+mydata$n[i,2])/(mydata$n[i,1]*mydata$n[i,2]))+(SMD[i]^2)/(2*(mydata$n[i,1]+mydata$n[i,2]))
 
 }
 MD
@@ -34,6 +37,7 @@ Swithinpar
 Swithin
 SMD
 Var
+
 
 #######################
 #then make the model
