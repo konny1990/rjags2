@@ -36,13 +36,7 @@ for (i in 1:mydata$ns) {
   Var[i]=((mydata$n[i,1]+mydata$n[i,2])/(mydata$n[i,1]*mydata$n[i,2]))+(SMD[i]^2)/(2*(mydata$n[i,1]+mydata$n[i,2]))
   prec[i]=1/Var[i]
 }
-MD
-Swithinar
-Swithinpar
-Swithin
-SMD
-Var
-prec
+
 
 mydata=list(ns=ns,m=m,sd=sd, n=n)
 #######################
