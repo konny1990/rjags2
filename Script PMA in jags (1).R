@@ -10,7 +10,7 @@ help(jags)
 #######################
 
 #to prec to evala afou to ipologise i R, giati den to angnorize meta to jag
-mydata = list(ns=3,prec=c(4.59,4.36,4.91),m=cbind(c(187.5,193.4,161.3),c(165.6,171.9,180.5)),sd=cbind(c(12.3, 8.5,6.9),c(11.9, 10.8, 11.1)),n=cbind(c(12,13,14),c(14,15,16)))
+mydata = list(ns=3,m=cbind(c(187.5,193.4,161.3),c(165.6,171.9,180.5)),sd=cbind(c(12.3, 8.5,6.9),c(11.9, 10.8, 11.1)),n=cbind(c(12,13,14),c(14,15,16)))
 #mydata
 MD=c()
 mydata$ns
@@ -44,7 +44,7 @@ SMD
 Var
 prec
 
-
+mydata=list(ns=ns,m=m,sd=sd, n=n)
 #######################
 #then make the model
 #
